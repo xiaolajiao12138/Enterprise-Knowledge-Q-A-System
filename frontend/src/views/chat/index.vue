@@ -132,7 +132,8 @@
                 <div
                   v-for="(src, sIdx) in msg.sources"
                   :key="sIdx"
-                  class="source-item"
+                  class="source-item clickable"
+                  @click="handleOpenSourceDetail(src)"
                 >
                   <div class="source-top">
                     <span class="source-doc-name">
@@ -141,6 +142,10 @@
                     </span>
                     <el-tag size="small" type="info">切片序号: #{{ src.chunk_index }}</el-tag>
                     <el-tag v-if="src.score" size="small" type="success">匹配度: {{ (src.score * 100).toFixed(0) }}%</el-tag>
+                    <div class="source-action-pill">
+                      <el-icon><View /></el-icon>
+                      <span>点击查看详情</span>
+                    </div>
                   </div>
                   <div class="source-preview">{{ src.content_preview }}</div>
                 </div>
@@ -196,6 +201,88 @@
         <el-button type="primary" @click="confirmRename">保存</el-button>
       </template>
     </el-dialog>
+
+    <!-- 知识库引用来源详情与原文预览抽屉 -->
+    <el-drawer
+      v-model="sourceDrawerVisible"
+      :title="`知识库引用详情 - 《${selectedSource.filename || '未知文档'}》`"
+      size="620px"
+      direction="rtl"
+      destroy-on-close
+    >
+      <div v-if="selectedSource" class="drawer-source-container">
+        <!-- 基础元数据栏 -->
+        <div class="source-meta-bar">
+          <div class="meta-tag-item">
+            <span class="meta-label">命中切片：</span>
+            <el-tag size="small" type="primary">#{{ selectedSource.chunk_index }}</el-tag>
+          </div>
+          <div class="meta-tag-item">
+            <span class="meta-label">算法匹配度：</span>
+            <el-tag size="small" type="success">{{ (selectedSource.score * 100).toFixed(0) }}%</el-tag>
+          </div>
+          <div class="meta-tag-item" v-if="selectedSource.page">
+            <span class="meta-label">文档定位：</span>
+            <el-tag size="small" type="info">第 {{ selectedSource.page }} 页/段</el-tag>
+          </div>
+        </div>
+
+        <!-- 标签切换：命中切片 / 原文档解析全文 -->
+        <el-tabs v-model="activeSourceTab" class="source-tabs" @tab-change="handleTabChange">
+          <el-tab-pane label="当前命中切片内容" name="chunk">
+            <div class="chunk-content-box">
+              <div class="box-toolbar">
+                <span class="toolbar-tip">大模型本次回答直接引用的知识库切片内容：</span>
+                <el-button size="small" link type="primary" @click="copyChunkContent">
+                  <el-icon><CopyDocument /></el-icon> 复制切片内容
+                </el-button>
+              </div>
+              <div class="chunk-text-view">
+                {{ selectedSource.content || selectedSource.content_preview }}
+              </div>
+            </div>
+          </el-tab-pane>
+
+          <el-tab-pane label="原文档全文预览" name="fullDoc">
+            <div v-loading="docFullLoading" class="full-doc-box">
+              <div class="box-toolbar">
+                <span class="toolbar-tip" v-if="docFullData.total_pages">
+                  共 {{ docFullData.total_pages }} 页/段，计 {{ docFullData.total_chars }} 字符
+                </span>
+                <span class="toolbar-tip" v-else>原文档提取内容：</span>
+                <el-button
+                  v-if="selectedSource.document_id"
+                  size="small"
+                  link
+                  type="success"
+                  @click="handleDownloadOriginDoc"
+                >
+                  <el-icon><Download /></el-icon> 下载原始文档
+                </el-button>
+              </div>
+              <div class="full-doc-text-view">
+                <pre v-if="docFullData.preview_text">{{ docFullData.preview_text }}</pre>
+                <el-empty v-else-if="!docFullLoading" description="暂无法加载该文档上下文" :image-size="60" />
+              </div>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+
+      <template #footer>
+        <div class="drawer-footer">
+          <el-button
+            v-if="selectedSource && selectedSource.document_id"
+            type="primary"
+            plain
+            @click="handleDownloadOriginDoc"
+          >
+            <el-icon><Download /></el-icon> 下载原始文件
+          </el-button>
+          <el-button @click="sourceDrawerVisible = false">关闭</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
@@ -206,13 +293,14 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Plus, ChatLineRound, EditPen, Delete, Download,
   DeleteFilled, ChatDotRound, Document, ArrowDown,
-  ArrowUp, Files, Promotion
+  ArrowUp, Files, Promotion, View, CopyDocument
 } from '@element-plus/icons-vue'
 import {
   getSessionsApi, createSessionApi, renameSessionApi,
   deleteSessionApi, clearSessionMessagesApi, getSessionMessagesApi,
   askQuestionApi, exportChatHistoryApi
 } from '@/api/chat'
+import { previewDocumentApi, downloadDocumentApi } from '@/api/document'
 
 const sessions = ref([])
 const currentSessionId = ref(null)
@@ -225,6 +313,17 @@ const openedSources = reactive({})
 const renameDialogVisible = ref(false)
 const editingSessionId = ref(null)
 const editTitle = ref('')
+
+// 引用来源查看抽屉状态
+const sourceDrawerVisible = ref(false)
+const selectedSource = ref({})
+const activeSourceTab = ref('chunk')
+const docFullLoading = ref(false)
+const docFullData = reactive({
+  preview_text: '',
+  total_chars: 0,
+  total_pages: 0
+})
 
 const demoQuestions = [
   '员工每年的年休假有几天？',
@@ -251,6 +350,71 @@ const formatTime = (isoStr) => {
 
 const toggleSources = (msgId) => {
   openedSources[msgId] = !openedSources[msgId]
+}
+
+const handleOpenSourceDetail = async (src) => {
+  selectedSource.value = { ...src }
+  activeSourceTab.value = 'chunk'
+  docFullData.preview_text = ''
+  docFullData.total_chars = 0
+  docFullData.total_pages = 0
+  sourceDrawerVisible.value = true
+
+  if (src.document_id) {
+    loadFullDocument(src.document_id)
+  }
+}
+
+const loadFullDocument = async (docId) => {
+  if (docFullData.preview_text) return
+  docFullLoading.value = true
+  try {
+    const res = await previewDocumentApi(docId)
+    docFullData.preview_text = res.preview_text
+    docFullData.total_chars = res.total_chars
+    docFullData.total_pages = res.total_pages
+  } catch (e) {
+  } finally {
+    docFullLoading.value = false
+  }
+}
+
+const handleTabChange = (tabName) => {
+  if (tabName === 'fullDoc' && selectedSource.value.document_id && !docFullData.preview_text) {
+    loadFullDocument(selectedSource.value.document_id)
+  }
+}
+
+const copyChunkContent = async () => {
+  const text = selectedSource.value.content || selectedSource.value.content_preview || ''
+  try {
+    await navigator.clipboard.writeText(text)
+    ElMessage.success('切片内容已复制到剪贴板')
+  } catch (e) {
+    ElMessage.info('已选中文本，请使用 Ctrl+C 复制')
+  }
+}
+
+const handleDownloadOriginDoc = async () => {
+  const docId = selectedSource.value.document_id
+  if (!docId) {
+    ElMessage.warning('该记录无关联文档ID')
+    return
+  }
+  try {
+    const blob = await downloadDocumentApi(docId)
+    const url = window.URL.createObjectURL(new Blob([blob]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', selectedSource.value.filename || '文档')
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+    ElMessage.success('原始文档已开始下载')
+  } catch (e) {
+    ElMessage.error('下载原始文档失败')
+  }
 }
 
 const scrollToBottom = () => {
@@ -695,17 +859,29 @@ onMounted(() => {
 }
 
 .source-item {
-  padding: 8px;
+  padding: 10px 12px;
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #edf2f7;
+  transition: all 0.2s ease;
+}
+
+.source-item.clickable {
+  cursor: pointer;
+}
+
+.source-item.clickable:hover {
+  border-color: #3b82f6;
+  background-color: #f8faff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.12);
+  transform: translateY(-1px);
 }
 
 .source-top {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .source-doc-name {
@@ -716,10 +892,118 @@ onMounted(() => {
   gap: 4px;
 }
 
+.source-action-pill {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #2563eb;
+  font-weight: 500;
+  background: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.source-item:hover .source-action-pill {
+  background: #2563eb;
+  color: #ffffff;
+}
+
 .source-preview {
   color: #64748b;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* 抽屉样式 */
+.drawer-source-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.source-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.meta-tag-item {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+.meta-label {
+  color: #64748b;
+  margin-right: 4px;
+}
+
+.source-tabs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chunk-content-box, .full-doc-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.box-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #64748b;
+  padding: 4px 0;
+}
+
+.chunk-text-view {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #0f172a;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.full-doc-text-view {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.full-doc-text-view pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #334155;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 /* 底部输入框 */

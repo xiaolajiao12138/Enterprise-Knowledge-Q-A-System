@@ -152,8 +152,10 @@ class RAGService:
                 "document_id": meta.get("document_id"),
                 "filename": filename,
                 "chunk_index": chunk_idx,
+                "page": page,
+                "content": content,
                 "content_preview": content[:160] + ("..." if len(content) > 160 else ""),
-                "score": max(item["combined_score"], item["v_score"])
+                "score": round(float(max(item["combined_score"], item["v_score"])), 4)
             })
 
         combined_context = "\n\n".join(context_blocks)

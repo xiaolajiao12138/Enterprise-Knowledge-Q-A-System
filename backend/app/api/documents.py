@@ -3,12 +3,13 @@ import shutil
 from pathlib import Path
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks, status
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
 from app.models.document import Document
 from app.schemas.document import DocumentResponse, ChromaStatsResponse
-from app.core.deps import get_current_admin
+from app.core.deps import get_current_admin, get_current_user
 from app.core.logger import log_event, logger
 from app.config import settings, UPLOAD_DIR
 from app.services.background_tasks import process_document_task
@@ -86,9 +87,9 @@ def list_documents(
 def preview_document(
     document_id: int,
     db: Session = Depends(get_db),
-    admin: User = Depends(get_current_admin)
+    current_user: User = Depends(get_current_user)
 ):
-    """预览文档文本前 2000 个字符"""
+    """预览文档文本前 3000 个字符"""
     doc = db.query(Document).filter(Document.id == document_id).first()
     if not doc:
         raise HTTPException(status_code=404, detail="文档不存在")
@@ -99,7 +100,7 @@ def preview_document(
     try:
         pages = DocumentParser.parse(doc.file_path)
         combined = "\n\n".join([f"--- 第 {p.get('page', 1)} 页/段 ---\n{p.get('text', '')}" for p in pages])
-        preview_text = combined[:3000]
+        preview_text = combined[:8000]
         return {
             "filename": doc.filename,
             "preview_text": preview_text,
@@ -108,6 +109,23 @@ def preview_document(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"预览解析失败: {str(e)}")
+
+
+@router.get("/{document_id}/download", summary="下载知识库原始文档")
+def download_document(
+    document_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """下载或在线读取原始文档二进制文件"""
+    doc = db.query(Document).filter(Document.id == document_id).first()
+    if not doc or not os.path.exists(doc.file_path):
+        raise HTTPException(status_code=404, detail="文档文件不存在")
+
+    return FileResponse(
+        path=doc.file_path,
+        filename=doc.filename
+    )
 
 
 @router.delete("/{document_id}", summary="删除知识库文档")

@@ -25,6 +25,14 @@ export function previewDocumentApi(id) {
   })
 }
 
+export function downloadDocumentApi(id) {
+  return request({
+    url: `/documents/${id}/download`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+
 export function deleteDocumentApi(id) {
   return request({
     url: `/documents/${id}`,
