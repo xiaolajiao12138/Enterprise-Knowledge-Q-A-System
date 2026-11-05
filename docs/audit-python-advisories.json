@@ -1,0 +1,848 @@
+[
+  {
+    "id": "GHSA-2wm9-hf6c-p5cr",
+    "summary": "ChromaDB allows any authenticated users to arbitrarily read, write, update, or delete data in any tenant's collection",
+    "details": "A lack of authorization validation in version 0.4.17 or later of the ChromaDB Python project allows any authenticated users to arbitrarily read, write, update, or delete data in any tenant's collection regardless of which tenant they belong to.",
+    "aliases": [
+      "CVE-2026-45830",
+      "PYSEC-2026-3813"
+    ],
+    "modified": "2026-09-10T12:25:31.394776670Z",
+    "published": "2026-06-12T18:31:56Z",
+    "database_specific": {
+      "github_reviewed_at": "2026-08-24T19:57:41Z",
+      "nvd_published_at": "2026-06-12T16:16:28Z",
+      "cwe_ids": [
+        "CWE-266",
+        "CWE-639"
+      ],
+      "severity": "HIGH",
+      "github_reviewed": true
+    },
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-45830"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/chroma-core/chroma/issues/7588"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/chroma-core/chroma/pull/7602"
+      },
+      {
+        "type": "WEB",
+        "url": "https://access.redhat.com/security/cve/CVE-2026-45830"
+      },
+      {
+        "type": "WEB",
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2488408"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/chroma-core/chroma"
+      },
+      {
+        "type": "WEB",
+        "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-45830.json"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-06-chromadb"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "chromadb",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/chromadb"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "0.4.17"
+              },
+              {
+                "last_affected": "1.5.9"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "0.4.17",
+          "0.4.18",
+          "0.4.19",
+          "0.4.20",
+          "0.4.21",
+          "0.4.22",
+          "0.4.23",
+          "0.4.24",
+          "0.5.0",
+          "0.5.1",
+          "0.5.10",
+          "0.5.11",
+          "0.5.12",
+          "0.5.13",
+          "0.5.15",
+          "0.5.16",
+          "0.5.17",
+          "0.5.18",
+          "0.5.2",
+          "0.5.20",
+          "0.5.21",
+          "0.5.23",
+          "0.5.3",
+          "0.5.4",
+          "0.5.5",
+          "0.5.7",
+          "0.5.9",
+          "0.6.0",
+          "0.6.1",
+          "0.6.2",
+          "0.6.3",
+          "1.0.0",
+          "1.0.0b0",
+          "1.0.10",
+          "1.0.11",
+          "1.0.12",
+          "1.0.13",
+          "1.0.15",
+          "1.0.16",
+          "1.0.17",
+          "1.0.18",
+          "1.0.19",
+          "1.0.2",
+          "1.0.20",
+          "1.0.21",
+          "1.0.3",
+          "1.0.4",
+          "1.0.5",
+          "1.0.6",
+          "1.0.7",
+          "1.0.8",
+          "1.0.9",
+          "1.1.0",
+          "1.1.1",
+          "1.2.0",
+          "1.2.1",
+          "1.2.2",
+          "1.3.0",
+          "1.3.2",
+          "1.3.3",
+          "1.3.4",
+          "1.3.5",
+          "1.3.6",
+          "1.3.7",
+          "1.4.0",
+          "1.4.1",
+          "1.5.0",
+          "1.5.1",
+          "1.5.2",
+          "1.5.3",
+          "1.5.4",
+          "1.5.5",
+          "1.5.6",
+          "1.5.7",
+          "1.5.8",
+          "1.5.9"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2026/06/GHSA-2wm9-hf6c-p5cr/GHSA-2wm9-hf6c-p5cr.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N"
+      }
+    ]
+  },
+  {
+    "id": "GHSA-36p7-vc44-83pf",
+    "summary": "ChromaDB has a code injection vulnerability",
+    "details": "A code injection vulnerability in version 0.4.17 or later of the ChromaDB Python project allows an authenticated attacker to run arbitrary code on the server by sending a malicious model repository and trust_remote_code set to true in the /api/v2/tenants/default_tenant/databases/default_database/collections/{collection_id} if they have the UPDATE_COLLECTION permission.",
+    "aliases": [
+      "CVE-2026-45833",
+      "PYSEC-2026-3814"
+    ],
+    "modified": "2026-09-10T12:25:44.502926958Z",
+    "published": "2026-06-12T18:31:56Z",
+    "database_specific": {
+      "cwe_ids": [
+        "CWE-94"
+      ],
+      "severity": "CRITICAL",
+      "github_reviewed": true,
+      "github_reviewed_at": "2026-08-24T20:03:34Z",
+      "nvd_published_at": "2026-06-12T16:16:29Z"
+    },
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-45833"
+      },
+      {
+        "type": "WEB",
+        "url": "https://access.redhat.com/security/cve/CVE-2026-45833"
+      },
+      {
+        "type": "WEB",
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2488430"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/chroma-core/chroma"
+      },
+      {
+        "type": "WEB",
+        "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-45833.json"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-06-chromadb-5"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "chromadb",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/chromadb"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "0.4.17"
+              },
+              {
+                "last_affected": "1.5.9"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "0.4.17",
+          "0.4.18",
+          "0.4.19",
+          "0.4.20",
+          "0.4.21",
+          "0.4.22",
+          "0.4.23",
+          "0.4.24",
+          "0.5.0",
+          "0.5.1",
+          "0.5.10",
+          "0.5.11",
+          "0.5.12",
+          "0.5.13",
+          "0.5.15",
+          "0.5.16",
+          "0.5.17",
+          "0.5.18",
+          "0.5.2",
+          "0.5.20",
+          "0.5.21",
+          "0.5.23",
+          "0.5.3",
+          "0.5.4",
+          "0.5.5",
+          "0.5.7",
+          "0.5.9",
+          "0.6.0",
+          "0.6.1",
+          "0.6.2",
+          "0.6.3",
+          "1.0.0",
+          "1.0.0b0",
+          "1.0.10",
+          "1.0.11",
+          "1.0.12",
+          "1.0.13",
+          "1.0.15",
+          "1.0.16",
+          "1.0.17",
+          "1.0.18",
+          "1.0.19",
+          "1.0.2",
+          "1.0.20",
+          "1.0.21",
+          "1.0.3",
+          "1.0.4",
+          "1.0.5",
+          "1.0.6",
+          "1.0.7",
+          "1.0.8",
+          "1.0.9",
+          "1.1.0",
+          "1.1.1",
+          "1.2.0",
+          "1.2.1",
+          "1.2.2",
+          "1.3.0",
+          "1.3.2",
+          "1.3.3",
+          "1.3.4",
+          "1.3.5",
+          "1.3.6",
+          "1.3.7",
+          "1.4.0",
+          "1.4.1",
+          "1.5.0",
+          "1.5.1",
+          "1.5.2",
+          "1.5.3",
+          "1.5.4",
+          "1.5.5",
+          "1.5.6",
+          "1.5.7",
+          "1.5.8",
+          "1.5.9"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2026/06/GHSA-36p7-vc44-83pf/GHSA-36p7-vc44-83pf.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H"
+      }
+    ]
+  },
+  {
+    "id": "GHSA-3qf3-8w2g-rqmx",
+    "summary": "python-jose algorithm confusion guard bypassed by DER-encoded public keys",
+    "details": "python-jose through 3.5.0 fails to properly validate asymmetric keys in HMAC initialization, accepting DER-encoded public keys that lack PEM armor or SSH prefixes. Attackers holding the service's public key can forge HS256 tokens that pass verification when algorithms are not explicitly restricted. This is an incomplete fix for CVE-2024-33663.",
+    "aliases": [
+      "CVE-2024-33663",
+      "CVE-2026-85394",
+      "GHSA-6c5p-j8vq-pqhj",
+      "PYSEC-2024-232",
+      "PYSEC-2026-4298"
+    ],
+    "modified": "2026-10-15T14:56:01.261338787Z",
+    "published": "2026-09-03T21:31:15Z",
+    "database_specific": {
+      "github_reviewed": true,
+      "github_reviewed_at": "2026-10-05T22:55:01Z",
+      "nvd_published_at": "2026-09-03T19:17:31Z",
+      "cwe_ids": [
+        "CWE-347"
+      ],
+      "severity": "CRITICAL"
+    },
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85394"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/mpdavis/python-jose/issues/414"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/advisories/GHSA-6c5p-j8vq-pqhj"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/mpdavis/python-jose"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/mpdavis/python-jose/blob/018b310ddb8b50dcfd09a0c152117835a21dd656/jose/backends/native.py"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/mpdavis/python-jose/blob/018b310ddb8b50dcfd09a0c152117835a21dd656/jose/utils.py"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.vulncheck.com/advisories/python-jose-through-3.5.0-algorithm-confusion-via-der-encoded-public-key-as-hmac-secret"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "python-jose",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/python-jose"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "last_affected": "3.5.0"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "0.1.0",
+          "0.1.1",
+          "0.1.2",
+          "0.1.3",
+          "0.1.4",
+          "0.1.5",
+          "0.1.6",
+          "0.1.7",
+          "0.1.8",
+          "0.2.0",
+          "0.3.0",
+          "0.4.0",
+          "0.5.0",
+          "0.5.1",
+          "0.5.2",
+          "0.5.3",
+          "0.5.4",
+          "0.5.5",
+          "0.5.6",
+          "0.6.1",
+          "0.6.2",
+          "0.7.0",
+          "1.0.0",
+          "1.1.0",
+          "1.2.0",
+          "1.3.0",
+          "1.3.1",
+          "1.3.2",
+          "1.4.0",
+          "2.0.0",
+          "2.0.1",
+          "2.0.2",
+          "3.0.0",
+          "3.0.1",
+          "3.1.0",
+          "3.2.0",
+          "3.3.0",
+          "3.4.0",
+          "3.5.0"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2026/09/GHSA-3qf3-8w2g-rqmx/GHSA-3qf3-8w2g-rqmx.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N"
+      }
+    ]
+  },
+  {
+    "id": "GHSA-f4j7-r4q5-qw2c",
+    "summary": "ChromaDB Python project has a pre-authentication code injection vulnerability",
+    "details": "A pre-authentication, code injection vulnerability in version 1.0.0 or later of the ChromaDB Python project allows an unauthenticated attacker to run arbitrary code on the server by sending a malicious model repository and trust_remote_code set to true in the /api/v2/tenants/{tenant}/databases/{db}/collections endpoint.",
+    "aliases": [
+      "CVE-2026-45829",
+      "PYSEC-2026-311"
+    ],
+    "modified": "2026-10-05T21:45:03.620198036Z",
+    "published": "2026-05-18T18:31:30Z",
+    "database_specific": {
+      "github_reviewed_at": "2026-05-29T19:15:04Z",
+      "nvd_published_at": "2026-05-18T17:16:34Z",
+      "cwe_ids": [
+        "CWE-502",
+        "CWE-94"
+      ],
+      "severity": "CRITICAL",
+      "github_reviewed": true
+    },
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-45829"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/chroma-core/chroma/issues/6717"
+      },
+      {
+        "type": "WEB",
+        "url": "https://access.redhat.com/security/cve/CVE-2026-45829"
+      },
+      {
+        "type": "WEB",
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2479623"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/advisories/GHSA-f4j7-r4q5-qw2c"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/chroma-core/chroma"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/pypa/advisory-database/tree/main/vulns/chromadb/PYSEC-2026-311.yaml"
+      },
+      {
+        "type": "WEB",
+        "url": "https://pypi.org/project/chromadb"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.hiddenlayer.com/research/chromatoast-served-pre-auth"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "chromadb",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/chromadb"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "1.0.0"
+              },
+              {
+                "last_affected": "1.5.9"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "1.0.0",
+          "1.0.10",
+          "1.0.11",
+          "1.0.12",
+          "1.0.13",
+          "1.0.15",
+          "1.0.16",
+          "1.0.17",
+          "1.0.18",
+          "1.0.19",
+          "1.0.2",
+          "1.0.20",
+          "1.0.21",
+          "1.0.3",
+          "1.0.4",
+          "1.0.5",
+          "1.0.6",
+          "1.0.7",
+          "1.0.8",
+          "1.0.9",
+          "1.1.0",
+          "1.1.1",
+          "1.2.0",
+          "1.2.1",
+          "1.2.2",
+          "1.3.0",
+          "1.3.2",
+          "1.3.3",
+          "1.3.4",
+          "1.3.5",
+          "1.3.6",
+          "1.3.7",
+          "1.4.0",
+          "1.4.1",
+          "1.5.0",
+          "1.5.1",
+          "1.5.2",
+          "1.5.3",
+          "1.5.4",
+          "1.5.5",
+          "1.5.6",
+          "1.5.7",
+          "1.5.8",
+          "1.5.9"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2026/05/GHSA-f4j7-r4q5-qw2c/GHSA-f4j7-r4q5-qw2c.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P"
+      }
+    ]
+  },
+  {
+    "id": "GHSA-wj6h-64fc-37mp",
+    "summary": "Minerva timing attack on P-256 in python-ecdsa",
+    "details": "python-ecdsa has been found to be subject to a Minerva timing attack on the P-256 curve. Using the `ecdsa.SigningKey.sign_digest()` API function and timing signatures an attacker can leak the internal nonce which may allow for private key discovery. Both ECDSA signatures, key generation, and ECDH operations are affected. ECDSA signature verification is unaffected. The python-ecdsa project considers side channel attacks out of scope for the project and there is no planned fix.",
+    "aliases": [
+      "CVE-2024-23342",
+      "PYSEC-2026-1325"
+    ],
+    "modified": "2026-09-10T03:50:09.447249599Z",
+    "published": "2024-01-22T21:35:27Z",
+    "database_specific": {
+      "severity": "HIGH",
+      "github_reviewed": true,
+      "github_reviewed_at": "2024-01-22T21:35:27Z",
+      "nvd_published_at": "2024-01-23T00:15:26Z",
+      "cwe_ids": [
+        "CWE-203",
+        "CWE-208",
+        "CWE-385"
+      ]
+    },
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/tlsfuzzer/python-ecdsa/security/advisories/GHSA-wj6h-64fc-37mp"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23342"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/tlsfuzzer/python-ecdsa"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/tlsfuzzer/python-ecdsa/blob/master/SECURITY.md"
+      },
+      {
+        "type": "WEB",
+        "url": "https://minerva.crocs.fi.muni.cz"
+      },
+      {
+        "type": "WEB",
+        "url": "https://securitypitfalls.wordpress.com/2018/08/03/constant-time-compare-in-python"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "ecdsa",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/ecdsa"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "0"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "0.10",
+          "0.11",
+          "0.12",
+          "0.13",
+          "0.13.1",
+          "0.13.2",
+          "0.13.3",
+          "0.14",
+          "0.14.1",
+          "0.15",
+          "0.16.0",
+          "0.16.1",
+          "0.17.0",
+          "0.18.0",
+          "0.18.0b1",
+          "0.18.0b2",
+          "0.19.0",
+          "0.19.1",
+          "0.19.2",
+          "0.6",
+          "0.7",
+          "0.8",
+          "0.9"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2024/01/GHSA-wj6h-64fc-37mp/GHSA-wj6h-64fc-37mp.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      }
+    ]
+  },
+  {
+    "id": "GHSA-xph7-9rjv-w5fr",
+    "summary": "ChromaDB's SimpleRBACAuthorizationProvider doesn't check which tenant, database, or collection a permission applies to",
+    "details": "The SimpleRBACAuthorizationProvider authorization provider in versions 0.5.0 or later of the ChromaDB Python project evaluates whether a user holds a given permission but never checks which tenant, database, or collection that permission applies to allowing users to perform cross tenant actions.",
+    "aliases": [
+      "CVE-2026-45831",
+      "PYSEC-2026-3815"
+    ],
+    "modified": "2026-09-10T12:25:45.510140945Z",
+    "published": "2026-06-12T18:31:56Z",
+    "database_specific": {
+      "nvd_published_at": "2026-06-12T16:16:28Z",
+      "cwe_ids": [
+        "CWE-863"
+      ],
+      "severity": "HIGH",
+      "github_reviewed": true,
+      "github_reviewed_at": "2026-08-24T20:00:42Z"
+    },
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-45831"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/chroma-core/chroma/issues/7588"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/chroma-core/chroma/pull/7602"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/chroma-core/chroma"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-06-chromadb-3"
+      }
+    ],
+    "affected": [
+      {
+        "package": {
+          "name": "chromadb",
+          "ecosystem": "PyPI",
+          "purl": "pkg:pypi/chromadb"
+        },
+        "ranges": [
+          {
+            "type": "ECOSYSTEM",
+            "events": [
+              {
+                "introduced": "0.5.0"
+              },
+              {
+                "last_affected": "1.5.9"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          "0.5.0",
+          "0.5.1",
+          "0.5.10",
+          "0.5.11",
+          "0.5.12",
+          "0.5.13",
+          "0.5.15",
+          "0.5.16",
+          "0.5.17",
+          "0.5.18",
+          "0.5.2",
+          "0.5.20",
+          "0.5.21",
+          "0.5.23",
+          "0.5.3",
+          "0.5.4",
+          "0.5.5",
+          "0.5.7",
+          "0.5.9",
+          "0.6.0",
+          "0.6.1",
+          "0.6.2",
+          "0.6.3",
+          "1.0.0",
+          "1.0.0b0",
+          "1.0.10",
+          "1.0.11",
+          "1.0.12",
+          "1.0.13",
+          "1.0.15",
+          "1.0.16",
+          "1.0.17",
+          "1.0.18",
+          "1.0.19",
+          "1.0.2",
+          "1.0.20",
+          "1.0.21",
+          "1.0.3",
+          "1.0.4",
+          "1.0.5",
+          "1.0.6",
+          "1.0.7",
+          "1.0.8",
+          "1.0.9",
+          "1.1.0",
+          "1.1.1",
+          "1.2.0",
+          "1.2.1",
+          "1.2.2",
+          "1.3.0",
+          "1.3.2",
+          "1.3.3",
+          "1.3.4",
+          "1.3.5",
+          "1.3.6",
+          "1.3.7",
+          "1.4.0",
+          "1.4.1",
+          "1.5.0",
+          "1.5.1",
+          "1.5.2",
+          "1.5.3",
+          "1.5.4",
+          "1.5.5",
+          "1.5.6",
+          "1.5.7",
+          "1.5.8",
+          "1.5.9"
+        ],
+        "database_specific": {
+          "source": "https://github.com/github/advisory-database/blob/main/advisories/github-reviewed/2026/06/GHSA-xph7-9rjv-w5fr/GHSA-xph7-9rjv-w5fr.json"
+        }
+      }
+    ],
+    "schema_version": "1.9.0",
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N"
+      }
+    ]
+  }
+]

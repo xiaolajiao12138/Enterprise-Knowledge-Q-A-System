@@ -1,0 +1,37 @@
+{
+  "source": "https://api.osv.dev/v1/querybatch",
+  "installed_packages_checked": 119,
+  "note": "Installed dependency closure with default environment markers; optional extras may be omitted. Advisory matches require applicability review.",
+  "findings": [
+    {
+      "name": "chromadb",
+      "version": "1.5.9",
+      "advisory_ids": [
+        "GHSA-2wm9-hf6c-p5cr",
+        "GHSA-36p7-vc44-83pf",
+        "GHSA-f4j7-r4q5-qw2c",
+        "GHSA-xph7-9rjv-w5fr",
+        "PYSEC-2026-311",
+        "PYSEC-2026-3813",
+        "PYSEC-2026-3814",
+        "PYSEC-2026-3815"
+      ]
+    },
+    {
+      "name": "ecdsa",
+      "version": "0.19.2",
+      "advisory_ids": [
+        "GHSA-wj6h-64fc-37mp",
+        "PYSEC-2026-1325"
+      ]
+    },
+    {
+      "name": "python-jose",
+      "version": "3.5.0",
+      "advisory_ids": [
+        "GHSA-3qf3-8w2g-rqmx",
+        "PYSEC-2026-4298"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,520 @@
+{
+  "summary": {
+    "PASS": 9,
+    "ISSUE": 21,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "model_mode": "real Chroma + hash embedding; LLM calls mocked offline",
+  "source_changes_during_run": [],
+  "source_sha256": {
+    "backend/app/config.py": "0cac3b63f74385836e689c5c02820564b80a8f415905c4a19919c24f7196e086",
+    "backend/app/database.py": "4a265ad4aa8a263f06c98a05235ac3b04d3c82c0135c3ce62b6adda1253b209b",
+    "backend/app/main.py": "1c1303ac2ea3b86f014dc45f1cb98d86f413d35eadae350194ba1c0a5103a56d",
+    "backend/app/__init__.py": "2bcdf000932f0b1dcf024e01d91f4e55249b29d78f93e7080be460c1c505ed0e",
+    "backend/app/api/auth.py": "3dbc0da03f296296d04dd812cad5a1c2441672d22196731a9dab790b329f37fd",
+    "backend/app/api/chat.py": "5c1e5091e587526c368d7ee8cf1570ffd05cc984c9f1bf0a843b8b8004c5171f",
+    "backend/app/api/documents.py": "880f7a92b44dcd9c50a15f538474c442eb9d0570446054196bc4a8b45f697c7a",
+    "backend/app/api/settings.py": "b500872c9d93ee48fec9663e46ff2b3a14362639bddc584c2bf2e93fbd97b60e",
+    "backend/app/api/users.py": "7d398d55a377b6b159b95a08583636570f6f2f8107da9bf99eecce96121964a3",
+    "backend/app/api/__init__.py": "e83a237c2058e7871d16bf5860ad1b214ba4900555a478f4ba84976e95db773a",
+    "backend/app/core/deps.py": "2153be9b431bba7ad1ffe793ae96cb0e36a040a4e94f72e5164fb1d619c52d64",
+    "backend/app/core/logger.py": "62e8270d179d0a8d90d4a445fd3f26c67bb031c7b91d4289725d8747bc2e844a",
+    "backend/app/core/security.py": "cd0a66f7d0ade01fc9f6e7d66fc12c600ab2fe632e9316d440832bf6806ca99c",
+    "backend/app/core/__init__.py": "80be7e6760226fd4506e9efc20fbe3402d531c5c4f47be34a3e9e1447b0261f9",
+    "backend/app/models/chat.py": "d16d077c93ddd4e812040793a552b9cca7ed22dcb6bd7d5df9861b14b446806c",
+    "backend/app/models/document.py": "9b1a50dcc3f9ee36f2868cc6b0fb74ca55856c9f4ca761c8175504e94353e043",
+    "backend/app/models/system_setting.py": "69da15afffdbba94ba31b9f4364bee339f679f36aa0a1da61c23432b27f0e5ab",
+    "backend/app/models/user.py": "e1e84209417b298b3e971b9f9a11a90c98ffa019dfb93465db40ff1e0121e01e",
+    "backend/app/models/__init__.py": "267e6ce333315d120d3ca209b2d9c5175c71d6ea05602ca87bf67193ef80762d",
+    "backend/app/schemas/chat.py": "39ec11a2f5412f8a3619280ad828649e98f8f2ae88ba62ba625b4aa11dbdf1de",
+    "backend/app/schemas/document.py": "466eedc65924e394851204172da3c48cf9f8f077cb89f91fe2aa8042670793f4",
+    "backend/app/schemas/setting.py": "ac7225ce637d875b466bbc5602d9a0d76ef8f6c165c0e9f9df7d95cd41ba7ba8",
+    "backend/app/schemas/user.py": "73961cfb6170f3795f5c7f26f0890ed78e3ce21ff2908680b0fe95bc26f8656d",
+    "backend/app/schemas/__init__.py": "30079f8f7738eaea12c59303cb432afb17e3e1ef9f2a6e847910a11dac8262ba",
+    "backend/app/services/background_tasks.py": "f7fdfb4381813351eaffd704d5f66a088db1fbdffd68b6c7c5302957c2e61b50",
+    "backend/app/services/document_parser.py": "0dcfe9e7a14a20f26009f0c64f5d096759f8b664cdcd13f066b48aa685d5c016",
+    "backend/app/services/rag_service.py": "560784036eec9529c4a105e6b9e5dc0a61c1482226918c503fb37b4598e52f34",
+    "backend/app/services/text_splitter.py": "bc36e08f8fd1201e38f668039027e5e95ae4df4475084c4edbfc21c5739325f8",
+    "backend/app/services/vector_store.py": "008e36a36f1627c9b213538a1024b88b5b4deb802cc96d59943367c4e232e39c",
+    "backend/app/services/__init__.py": "5ab56db8bf65b275fcfec52771ed11da5b0891f33c9d4196fac869957ed83a57",
+    "frontend/src/App.vue": "c9626ef6556dc5a5ad8a2ef49cbafe4161642f2d71a0c98835ab841d2f77f8be",
+    "frontend/src/main.js": "287ee6bca92459eef0320358ab24fe6ba10a242937f233d1adba0f1ef2a0c9a2",
+    "frontend/src/api/auth.js": "c4565682094c9d85376fc5d08fdbacb48df74ff673a5c3001435a414fe5f22e1",
+    "frontend/src/api/chat.js": "bd1529a63e954ed316396beab0a587c467efa71473b2e38c450ad0a3e9cefa85",
+    "frontend/src/api/document.js": "ded8dd367356e8d5a44b5bc51a1ad97f58a629fc9f77ed4065556569fd528607",
+    "frontend/src/api/request.js": "9f16295cadf351b36535440307ec88465754ab0e730892b76e12a49a65d62543",
+    "frontend/src/api/setting.js": "75c39deb3c1af6c5e87bff45d3a43cedafb9b24ae14d0c99ef31a7f8d95d24c8",
+    "frontend/src/api/user.js": "fa09c2006c56b14f5ff933819b10149e0968d20ae29545e78a57cddb16fa9af5",
+    "frontend/src/layout/index.vue": "e7c965a45e1a6b1db0cfdcfdf9fecca2b064083a3a74d0d11cd376d002191a98",
+    "frontend/src/router/index.js": "5f91b78892310eb60a82bffe990edb641e9c41f8e6f7253c992c9df5c27e14ba",
+    "frontend/src/store/user.js": "c712f3b2dcd303813a1d967309821489fecd58da4ff25579e11f6942efae9c97",
+    "frontend/src/views/chat/index.vue": "e794421657a890936be36fab902b33060d02b5a4e2a4c2dd55a15004dedfbb20",
+    "frontend/src/views/knowledge/index.vue": "906c5ab6d65b9fed6560eef364a172c12e7ec47c63393fbcfae23274a8a00e25",
+    "frontend/src/views/login/index.vue": "d0502b48cf381a05e61a0d4ce3690819dff36d50142bf40782941328cb930c6e",
+    "frontend/src/views/settings/index.vue": "927682a20717bd4b9bef08219846e2e8babffcce26695cc0bdc9430a442953a6",
+    "frontend/src/views/users/index.vue": "2e2f7128f631260acd9d4ab8578adb7549e2c9e08df9deb4cff4fa90972857af"
+  },
+  "results": [
+    {
+      "id": "F01",
+      "name": "Health, login, form login and anonymous access",
+      "status": "PASS",
+      "evidence": {
+        "http_codes": [
+          200,
+          200,
+          401,
+          400,
+          200
+        ]
+      }
+    },
+    {
+      "id": "F02",
+      "name": "Employee denied access to all administrator operations",
+      "status": "PASS",
+      "evidence": {
+        "admin_routes_checked": 16,
+        "http_codes": [
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403
+        ]
+      }
+    },
+    {
+      "id": "F03",
+      "name": "Session CRUD, ownership isolation, history and empty-KB refusal",
+      "status": "PASS",
+      "evidence": {
+        "cross_user_codes": [
+          404,
+          404,
+          404,
+          404
+        ],
+        "history_messages": 2,
+        "empty_kb_refusal": true
+      }
+    },
+    {
+      "id": "F04",
+      "name": "User create, disable, enable, role change and delete",
+      "status": "PASS",
+      "evidence": {
+        "disabled_promoted_deleted": [
+          403,
+          200,
+          401
+        ]
+      }
+    },
+    {
+      "id": "F05",
+      "name": "Configuration roundtrip, numeric validation and log filtering",
+      "status": "PASS",
+      "evidence": {
+        "invalid_top_k": 422,
+        "log_total": 5
+      }
+    },
+    {
+      "id": "F06",
+      "name": "TXT/MD/DOCX/PDF upload, parse, vectorize, preview and delete",
+      "status": "PASS",
+      "evidence": [
+        {
+          "format": ".txt",
+          "status": "completed",
+          "chunks": 1,
+          "preview_chars": 26,
+          "deleted_vectors": 0
+        },
+        {
+          "format": ".md",
+          "status": "completed",
+          "chunks": 1,
+          "preview_chars": 32,
+          "deleted_vectors": 0
+        },
+        {
+          "format": ".docx",
+          "status": "completed",
+          "chunks": 1,
+          "preview_chars": 84,
+          "deleted_vectors": 0
+        },
+        {
+          "format": ".pdf",
+          "status": "completed",
+          "chunks": 1,
+          "preview_chars": 40,
+          "deleted_vectors": 0
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "name": "Unsupported/oversized/empty/corrupt uploads",
+      "status": "PASS",
+      "evidence": {
+        "unsupported": 400,
+        "oversized": 400,
+        "empty_status": "failed",
+        "broken_pdf_status": "failed"
+      }
+    },
+    {
+      "id": "S01",
+      "name": "Known default JWT key permits forged administrator tokens without expiry",
+      "status": "ISSUE",
+      "evidence": {
+        "token_has_exp": false,
+        "admin_route_http": 200
+      }
+    },
+    {
+      "id": "S02",
+      "name": "Logout/password reset/account recreation do not revoke old tokens",
+      "status": "ISSUE",
+      "evidence": {
+        "old_token_after_logout_reset_recreate": [
+          200,
+          200,
+          200
+        ]
+      }
+    },
+    {
+      "id": "S03",
+      "name": "Deleted user's chat history leaks to a newly created user via SQLite ID reuse",
+      "status": "ISSUE",
+      "evidence": {
+        "deleted_user_id": 4,
+        "new_user_id": 4,
+        "old_session_visible": true,
+        "old_messages_http": 200
+      }
+    },
+    {
+      "id": "S04",
+      "name": "Passwords differing after byte 72 are silently equivalent",
+      "status": "ISSUE",
+      "evidence": {
+        "different_passwords_accepted_as_equal": true,
+        "both_allowed_by_schema": true
+      }
+    },
+    {
+      "id": "L01",
+      "name": "Multi-turn RAG reads oldest six messages; session update time stays stale",
+      "status": "ISSUE",
+      "evidence": {
+        "actual_history": [
+          "history-0",
+          "history-1",
+          "history-2",
+          "history-3",
+          "history-4",
+          "history-5"
+        ],
+        "expected_history": [
+          "history-4",
+          "history-5",
+          "history-6",
+          "history-7",
+          "history-8",
+          "history-9"
+        ],
+        "session_updated_at_after_new_messages": "2020-01-01T00:00:00"
+      }
+    },
+    {
+      "id": "L02",
+      "name": "Invalid supplied chat session silently creates a replacement",
+      "status": "ISSUE",
+      "evidence": {
+        "invalid_session_http": 200,
+        "created_replacement_session": 3
+      }
+    },
+    {
+      "id": "L03",
+      "name": "RAG failure leaves orphan question; retry duplicates it and exception leaks",
+      "status": "ISSUE",
+      "evidence": {
+        "http": 500,
+        "messages_after_failure": 1,
+        "user_messages_after_retry": 2,
+        "raw_exception_exposed": true
+      }
+    },
+    {
+      "id": "L04",
+      "name": "Overlap larger than chunk size is saved and breaks document processing",
+      "status": "ISSUE",
+      "evidence": {
+        "save_http": 200,
+        "new_document_status": "failed",
+        "error": "Got a larger chunk overlap (500) than chunk size (100), should be smaller."
+      }
+    },
+    {
+      "id": "L05",
+      "name": "Changing/restoring embedding model breaks queries against existing collection",
+      "status": "ISSUE",
+      "evidence": {
+        "indexed_dimension": 384,
+        "query_dimension": 768,
+        "error": "InvalidArgumentError: Collection expecting embedding with dimension of 384, got 768"
+      }
+    },
+    {
+      "id": "L06",
+      "name": "Large supported documents exceed Chroma batch limit",
+      "status": "ISSUE",
+      "evidence": {
+        "chroma_max_batch": 5461,
+        "submitted_chunks": 5462,
+        "error": "ValueError: Batch size of 5462 is greater than max batch size of 5461"
+      }
+    },
+    {
+      "id": "L07",
+      "name": "Vector deletion errors swallowed while API claims complete deletion",
+      "status": "ISSUE",
+      "evidence": {
+        "delete_http": 200,
+        "deleted_document_vectors_remaining": 1
+      }
+    },
+    {
+      "id": "L08",
+      "name": "Failed reindex destroys previous vectors and leaves stale chunk count",
+      "status": "ISSUE",
+      "evidence": {
+        "submit_http": 200,
+        "vectors_before": 1,
+        "vectors_after_failure": 0,
+        "status": "failed",
+        "recorded_chunks": 1
+      }
+    },
+    {
+      "id": "L09",
+      "name": "Vector clear failure reported as success and DB state becomes inaccurate",
+      "status": "ISSUE",
+      "evidence": {
+        "clear_http": 200,
+        "vectors_remaining": 1,
+        "recorded_chunks": 0,
+        "document_status": "completed"
+      }
+    },
+    {
+      "id": "L10",
+      "name": "Textless/scanned PDF placeholder is indexed and reported as successful",
+      "status": "ISSUE",
+      "evidence": {
+        "textless_pdf_status": "completed",
+        "chunks": 1
+      }
+    },
+    {
+      "id": "S05",
+      "name": "CSV export retains formulas and writes two BOMs",
+      "status": "ISSUE",
+      "evidence": {
+        "http": 200,
+        "double_bom": true,
+        "first_header": "'\\ufeff会话标题'",
+        "unescaped_formula_cells": [
+          "=1+1",
+          "=1+1",
+          "=1+1"
+        ]
+      }
+    },
+    {
+      "id": "L11",
+      "name": "Allowed Chinese username makes CSV download fail with HTTP 500",
+      "status": "ISSUE",
+      "evidence": {
+        "unicode_username_export_http": 500,
+        "detail": {
+          "detail": "服务器内部错误: 'latin-1' codec can't encode characters in position 34-37: ordinal not in range(256)"
+        }
+      }
+    },
+    {
+      "id": "L12",
+      "name": "Last administrator can demote themselves and lock out administration",
+      "status": "ISSUE",
+      "evidence": {
+        "self_demotion_http": 200,
+        "remaining_active_admins": 0
+      }
+    },
+    {
+      "id": "L16",
+      "name": "Offline answers omit required facts from the supplied demo policy documents",
+      "status": "ISSUE",
+      "evidence": [
+        {
+          "question": "员工每年的年休假有几天？",
+          "has_sources": true,
+          "required_facts": [
+            "5 天",
+            "10 天",
+            "15 天"
+          ],
+          "answer_has_required_facts": false,
+          "answer": "根据企业内部知识库文档《企业员工考勤与休假管理制度.md》的明确规定：\n\n- **- 公司额外为司龄满 1 年的员工每年发放 1 天福利司龄假，上限累计不超过 5 天**\n- **- 每位转正员工每年享有 5 天全额带薪病假；**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+        },
+        {
+          "question": "员工账号密码的安全复杂度规范是什么？",
+          "has_sources": true,
+          "required_facts": [
+            "12",
+            "大写",
+            "小写"
+          ],
+          "answer_has_required_facts": false,
+          "answer": "根据企业内部知识库文档《企业信息安全与数据保密规范.md》的明确规定：\n\n- **[参考片段 1 | 来源文档: 《企业信息安全与数据保密规范.md》 第 1 页/段]**\n- **# 企业信息安全与数据保密管理规范**\n- **## 第一章 账户与密码安全管理**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+        },
+        {
+          "question": "内部研发代码是否可以上传到外部公开仓库？",
+          "has_sources": true,
+          "required_facts": [
+            "严禁",
+            "源代码"
+          ],
+          "answer_has_required_facts": false,
+          "answer": "根据企业内部知识库文档《企业信息安全与数据保密规范.md》的明确规定：\n\n- **[参考片段 1 | 来源文档: 《企业信息安全与数据保密规范.md》 第 1 页/段]**\n- **## 第二章 数据分级与外传合规**\n- **1. **数据密级分类**：**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+        }
+      ]
+    },
+    {
+      "id": "L13",
+      "name": "Unrelated queries and advertised quick questions in offline RAG",
+      "status": "PASS",
+      "evidence": [
+        {
+          "question": "量子计算机的购买价格是多少？",
+          "refused": true,
+          "sources": [],
+          "answer": "知识库中暂未检索到与该问题相关的信息，无法为您解答。请尝试更换提问方式或联系管理员补充相关文档。"
+        },
+        {
+          "question": "法国首都在哪里？",
+          "refused": true,
+          "sources": [],
+          "answer": "知识库中暂未检索到与该问题相关的信息，无法为您解答。请尝试更换提问方式或联系管理员补充相关文档。"
+        },
+        {
+          "question": "公司一二线城市的出差住宿报销标准是多少？",
+          "refused": false,
+          "sources": [
+            "企业员工考勤与休假管理制度.md"
+          ],
+          "answer": "根据企业内部知识库文档《企业员工考勤与休假管理制度.md》的明确规定：\n\n- **[参考片段 1 | 来源文档: 《企业员工考勤与休假管理制度.md》 第 1 页/段]**\n- **## 第三章 差旅与外出报销标准**\n- **1. **出差审批**：员工因公出差须提前在 OA 系统提交《出差申请单》，经直属主管及部门负责人审批通过后方可订票**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+        },
+        {
+          "question": "公司员工考勤的弹性打卡时间是多久？",
+          "refused": false,
+          "sources": [
+            "企业员工考勤与休假管理制度.md"
+          ],
+          "answer": "根据企业内部知识库文档《企业员工考勤与休假管理制度.md》的明确规定：\n\n- **[参考片段 1 | 来源文档: 《企业员工考勤与休假管理制度.md》 第 1 页/段]**\n- **# 企业员工考勤与休假管理制度（2026年修订版）**\n- **## 第一章 工作时间与考勤管理**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+        }
+      ]
+    },
+    {
+      "id": "L14",
+      "name": "Repeated reindex starts overlapping jobs for the same document",
+      "status": "ISSUE",
+      "evidence": {
+        "first_http": 200,
+        "second_while_processing_http": 200,
+        "tasks_started": 2
+      }
+    },
+    {
+      "id": "S06",
+      "name": "Document HTML reaches an assistant answer through the offline extraction path",
+      "status": "ISSUE",
+      "evidence": {
+        "untrusted_html_in_answer": true,
+        "answer": "根据企业内部知识库文档《policy.md》的明确规定：\n\n- **<img src=x onerror=\"globalThis.__audit_xss=1\"> 年假为5天**\n\n> *(提示：当前处于本地离线直接检索提炼模式；在【系统配置】中启动 Ollama 或接入大模型 API 即可享受完整自然语言流式归纳)*"
+      }
+    },
+    {
+      "id": "L15",
+      "name": "HTTPS Ollama endpoint silently switches to incompatible OpenAI protocol",
+      "status": "ISSUE",
+      "evidence": {
+        "selected_provider": "ollama",
+        "saved_provider_for_https_ollama": "openai"
+      }
+    },
+    {
+      "id": "F09",
+      "name": "Original SQL database, uploads and logical vector records unchanged",
+      "status": "PASS",
+      "evidence": {
+        "files_or_logical_tables_checked": 10,
+        "changed_entries": []
+      }
+    }
+  ],
+  "deployed_read_only": {
+    "users": [
+      {
+        "username": "admin",
+        "role": "admin",
+        "active": true,
+        "uses_published_default_password": true
+      },
+      {
+        "username": "staff",
+        "role": "employee",
+        "active": true,
+        "uses_published_default_password": true
+      }
+    ],
+    "documents": [
+      {
+        "filename": "企业信息安全与数据保密规范.md",
+        "status": "completed",
+        "chunks": 3,
+        "source_file_exists": true
+      },
+      {
+        "filename": "企业员工考勤与休假管理制度.md",
+        "status": "completed",
+        "chunks": 3,
+        "source_file_exists": true
+      },
+      {
+        "filename": "企业财务报销与差旅管理规定.pdf",
+        "status": "completed",
+        "chunks": 3,
+        "source_file_exists": true
+      }
+    ]
+  }
+}

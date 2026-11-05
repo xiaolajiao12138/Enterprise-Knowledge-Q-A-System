@@ -1,0 +1,95 @@
+{
+  "summary": {
+    "PASS": 2,
+    "ISSUE": 6,
+    "FAIL": 0,
+    "ERROR": 0
+  },
+  "verification": "VM component logic and real Vue compiler; no browser E2E",
+  "results": [
+    {
+      "id": "U01",
+      "name": "Compile all Vue single-file components",
+      "status": "PASS",
+      "evidence": {
+        "components": 7,
+        "errors": []
+      }
+    },
+    {
+      "id": "U02",
+      "name": "Markdown rendering preserves executable HTML attributes",
+      "status": "ISSUE",
+      "evidence": {
+        "rendered_html": "<img src=x onerror=\"globalThis.__audit_xss=1\">",
+        "template_uses_v_html": true
+      }
+    },
+    {
+      "id": "U03",
+      "name": "Switching sessions while a question is in flight mixes replies",
+      "status": "ISSUE",
+      "evidence": {
+        "current_session": 2,
+        "displayed_messages": [
+          "session-2",
+          "answer for A"
+        ]
+      }
+    },
+    {
+      "id": "U04",
+      "name": "Out-of-order message fetches display the wrong session history",
+      "status": "ISSUE",
+      "evidence": {
+        "current_session": 2,
+        "displayed_messages": [
+          "private history A"
+        ]
+      }
+    },
+    {
+      "id": "U05",
+      "name": "Creating a session while generating attaches the old reply to the new session",
+      "status": "ISSUE",
+      "evidence": {
+        "current_session": 3,
+        "displayed_messages": [
+          "old answer"
+        ]
+      }
+    },
+    {
+      "id": "U06",
+      "name": "Failed send loses input and leaves an unmarked temporary message",
+      "status": "ISSUE",
+      "evidence": {
+        "input_after_failure": "",
+        "temporary_messages": 1,
+        "sending": false
+      }
+    },
+    {
+      "id": "U07",
+      "name": "Browser route guard handles logged-out, employee and admin roles",
+      "status": "PASS",
+      "evidence": {
+        "destinations": [
+          "/login",
+          "/chat",
+          "allowed"
+        ]
+      }
+    },
+    {
+      "id": "U08",
+      "name": "Third-party embedding API key cannot be edited in settings UI",
+      "status": "ISSUE",
+      "evidence": {
+        "provider_control": true,
+        "api_key_control": false,
+        "backend_fields_exist": true
+      }
+    }
+  ]
+}
