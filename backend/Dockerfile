@@ -6,9 +6,14 @@ WORKDIR /app
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources 2>/dev/null || \
     sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list 2>/dev/null || true
 
-# 仅安装轻量 curl 工具，无需耗时的编译套件
+# 设置国内时区环境变量
+ENV TZ=Asia/Shanghai
+
+# 仅安装轻量 curl 与时区 tzdata 工具
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
+    tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖清单并使用国内清华源高速安装 (均为预编译二进制 Wheel 包，无需现场编译)
